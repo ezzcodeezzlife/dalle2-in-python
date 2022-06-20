@@ -18,6 +18,7 @@ from dalle2 import Dalle2
 
 dalle = Dalle2("sess-xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 generations = dalle.generate("portal to another dimension, digital art")
+
 print(generations)
 ```
 
@@ -47,7 +48,7 @@ print(generations)
     'prompt_id': 'prompt-2CtaLasdUbJHHfoJQy9Lul3T',
     'is_public': false
   },
-  // 8 more ... 
+  # 8 more ... 
 ]
 ```
 
