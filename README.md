@@ -53,7 +53,7 @@ print(generations)
     'prompt_id': 'prompt-2CtaLasdUbJHHfoJQy9Lul3T',
     'is_public': false
   },
-  # 8 more ... 
+  # 4 more ... 
 ]
 ```
 
