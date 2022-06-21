@@ -7,7 +7,6 @@ class Dalle2():
         self.bearer = bearer
 
     def generate(self, promt):
-        # make post request to https://labs.openai.com/api/labs/tasks with header: authorization: "Bearer asdasdasdas" and data: data: { task_type: "text2im", prompt: {caption: promt,batch_size: 6,},}
         url = "https://labs.openai.com/api/labs/tasks"
         headers = {
             'Authorization': "Bearer " + self.bearer,
