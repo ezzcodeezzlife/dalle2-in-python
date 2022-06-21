@@ -16,7 +16,7 @@ class Dalle2():
             "task_type": "text2im",
             "prompt": {
                 "caption": promt,
-                "batch_size": 10,
+                "batch_size": 6,
             }
         }
 
