@@ -1,6 +1,9 @@
 import requests
 import json
 import time 
+import urllib
+import urllib.request
+import os
 
 class Dalle2():
     def __init__(self, bearer):
@@ -40,4 +43,20 @@ class Dalle2():
                 # print("Task not completed yet")
                 time.sleep(3)
                 continue
+
+    def generate_and_download(self, promt):
+        generations = self.generate(promt)
+        if generations is None:
+            return None
+        
+        print("Download to directory: " + os.getcwd())
+        #print(generations)
+        for generation in generations:
+            imageurl = generation["generation"]["image_path"]
+            id = generation["id"]
+
+            urllib.request.urlretrieve(imageurl, id +".jpg")
+            print("✔️  Downloaded: " , id + ".jpg")
+        
+
             
