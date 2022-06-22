@@ -6,9 +6,9 @@ import urllib.request
 import os
 
 class Dalle2():
-    def __init__(self, bearer, batch_size):
+    def __init__(self, bearer):
         self.bearer = bearer
-        self.batch_size = batch_size
+        self.batch_size = 6
 
     def generate(self, promt):
         url = "https://labs.openai.com/api/labs/tasks"
