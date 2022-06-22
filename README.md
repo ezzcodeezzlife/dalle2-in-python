@@ -80,3 +80,8 @@ Download to directory: C:\Users\pc\dalle2
 ✔️  Downloaded:  generation-AAs4yxcczH1vl19FidR.jpg
 
 ```
+
+
+[![Test In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EEgZNAI58V_OiEfRJQSsQV_xkhHzQeRB?usp=sharing)
+
+
