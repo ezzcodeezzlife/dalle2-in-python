@@ -81,6 +81,31 @@ Download to directory: C:\Users\pc\dalle2
 ```
 
 
+or generate a specific amount 
+
+```python
+from dalle2 import Dalle2
+
+dalle = Dalle2("sess-xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+generations = dalle.generate_amount("portal to another dimension", 12) # Every generation has batch size 6 -> amount % 6 == 0 works best
+
+print(generations)
+```
+
+```
+✔️  Task created with ID: task-lm0V4nZasgAFasd7AsStE67 and PROMT: portal to another dimension OVERALL: 1/ 2
+⌛ Waiting for task to finish .. 
+➕  Appended new generations to all_generations
+✔️  Task created with ID: task-WcetZOHt8asdvHb433gi and PROMT: portal to another dimension OVERALL: 2/ 2
+⌛ Waiting for task to finish .. 
+➕  Appended new generations to all_generations
+🙌 Task completed!
+
+```
+```
+-> [list]
+```
+
 [![Test In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EEgZNAI58V_OiEfRJQSsQV_xkhHzQeRB?usp=sharing)
 
 

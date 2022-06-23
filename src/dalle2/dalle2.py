@@ -1,3 +1,4 @@
+from tokenize import String
 import requests
 import json
 import time 
@@ -58,6 +59,47 @@ class Dalle2():
 
             urllib.request.urlretrieve(imageurl, id +".jpg")
             print("✔️  Downloaded: " , id + ".jpg")
-        
 
-            
+    def generate_amount(self, promt, amount):
+        url = "https://labs.openai.com/api/labs/tasks"
+        headers = {
+            'Authorization': "Bearer " + self.bearer,
+            'Content-Type': "application/json"
+        }
+        body = {
+            "task_type": "text2im",
+            "prompt": {
+                "caption": promt,
+                "batch_size": self.batch_size,
+            }
+        }
+        
+        
+        all_generations = []
+        for i in range(1,int(amount / self.batch_size +1)):
+            url = "https://labs.openai.com/api/labs/tasks"
+            response = requests.post(url, headers=headers, data=json.dumps(body))
+            if response.status_code != 200:
+                print(response.text)
+                return None
+            data = response.json()
+            print("✔️  Task created with ID:", data["id"], "and PROMT:", promt, "OVERALL:" , str(i)  + "/" , int(amount / self.batch_size ))
+            print("⌛ Waiting for task to finish .. ")
+
+            while True:
+                url = "https://labs.openai.com/api/labs/tasks/" + data["id"]
+                response = requests.get(url, headers=headers)
+                data = response.json()
+                if data["status"] == "succeeded":
+                    
+                    generations = data["generations"]["data"]
+                    print("➕  Appended new generations to all_generations")
+                    all_generations.append(generations)
+                    break
+                else:
+                    # print("Task not completed yet")
+                    time.sleep(3)
+                    continue
+        print("🙌 Task completed!")
+        print(all_generations)
+        return all_generations
