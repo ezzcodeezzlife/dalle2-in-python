@@ -58,7 +58,7 @@ class Dalle2():
             id = generation["id"]
 
             urllib.request.urlretrieve(imageurl, id +".jpg")
-            print("✔️  Downloaded: " , id + ".jpg")
+            print("✔️ Downloaded: " , id + ".jpg")
 
     def generate_amount(self, promt, amount):
         url = "https://labs.openai.com/api/labs/tasks"
@@ -83,7 +83,7 @@ class Dalle2():
                 print(response.text)
                 return None
             data = response.json()
-            print("✔️  Task created with ID:", data["id"], "and PROMT:", promt, "OVERALL:" , str(i)  + "/" , int(amount / self.batch_size ))
+            print("✔️ Task created with ID:", data["id"], "and PROMT:", promt, "OVERALL:" , str(i)  + "/" , int(amount / self.batch_size ))
             print("⌛ Waiting for task to finish .. ")
 
             while True:
@@ -93,7 +93,7 @@ class Dalle2():
                 if data["status"] == "succeeded":
                     
                     generations = data["generations"]["data"]
-                    print("➕  Appended new generations to all_generations")
+                    print("➕ Appended new generations to all_generations")
                     all_generations.append(generations)
                     break
                 else:
