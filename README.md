@@ -75,8 +75,6 @@ Download to directory: C:\Users\pc\dalle2
 ✔️  Downloaded:  generation-zqfBC3yyxcPXRlW6zLP.jpg
 ✔️  Downloaded:  generation-soR3ryxcoeixzdyHG.jpg
 ✔️  Downloaded:  generation-lT5L4yxc2DOiGRwJi.jpg
-
-
 ```
 
 
