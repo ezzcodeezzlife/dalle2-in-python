@@ -52,7 +52,7 @@ print(generations)
     'prompt_id': 'prompt-2CtaLasdUbJHHfoJQy9Lul3T',
     'is_public': false
   },
-  # 4 more ... 
+  # 2 more ... 
 ]
 ```
 
@@ -75,8 +75,7 @@ Download to directory: C:\Users\pc\dalle2
 ✔️  Downloaded:  generation-zqfBC3yyxcPXRlW6zLP.jpg
 ✔️  Downloaded:  generation-soR3ryxcoeixzdyHG.jpg
 ✔️  Downloaded:  generation-lT5L4yxc2DOiGRwJi.jpg
-✔️  Downloaded:  generation-01DvPryxcq2BX1NOREL.jpg
-✔️  Downloaded:  generation-AAs4yxcczH1vl19FidR.jpg
+
 
 ```
 
@@ -87,7 +86,7 @@ or generate a specific amount
 from dalle2 import Dalle2
 
 dalle = Dalle2("sess-xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-generations = dalle.generate_amount("portal to another dimension", 12) # Every generation has batch size 6 -> amount % 6 == 0 works best
+generations = dalle.generate_amount("portal to another dimension", 12) # Every generation has batch size 4 -> amount % 4 == 0 works best
 
 print(generations)
 ```
