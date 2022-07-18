@@ -9,7 +9,7 @@ import os
 class Dalle2():
     def __init__(self, bearer):
         self.bearer = bearer
-        self.batch_size = 6
+        self.batch_size = 4
 
     def generate(self, promt):
         url = "https://labs.openai.com/api/labs/tasks"
