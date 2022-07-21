@@ -1,26 +1,25 @@
-from tokenize import String
-import requests
 import json
-import time 
+import os
+import requests
+import time
 import urllib
 import urllib.request
-import os
 
 class Dalle2():
     def __init__(self, bearer):
         self.bearer = bearer
         self.batch_size = 4
 
-    def generate(self, promt):
+    def generate(self, prompt):
         url = "https://labs.openai.com/api/labs/tasks"
         headers = {
             'Authorization': "Bearer " + self.bearer,
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
         }
         body = {
             "task_type": "text2im",
             "prompt": {
-                "caption": promt,
+                "caption": prompt,
                 "batch_size": self.batch_size,
             }
         }
@@ -30,8 +29,8 @@ class Dalle2():
             print(response.text)
             return None
         data = response.json()
-        print("✔️  Task created with ID:", data["id"], "and PROMT:", promt)
-        print("⌛ Waiting for task to finish .. ")
+        print("✔️  Task created with ID:", data["id"], "and PROMPT:", prompt)
+        print("⌛ Waiting for task to finish...")
 
         while True:
             url = "https://labs.openai.com/api/labs/tasks/" + data["id"]
@@ -40,66 +39,61 @@ class Dalle2():
             if data["status"] == "succeeded":
                 print("🙌 Task completed!")
                 generations = data["generations"]["data"]
-                return(generations)
-            else:
-                # print("Task not completed yet")
-                time.sleep(3)
-                continue
+                return generations
 
-    def generate_and_download(self, promt):
-        generations = self.generate(promt)
-        if generations is None:
+            time.sleep(3)
+
+    def generate_and_download(self, prompt):
+        generations = self.generate(prompt)
+        if not generations:
             return None
-        
+
         print("Download to directory: " + os.getcwd())
-        #print(generations)
         for generation in generations:
-            imageurl = generation["generation"]["image_path"]
-            id = generation["id"]
+            image_url = generation["generation"]["image_path"]
+            image_id = generation["id"]
 
-            urllib.request.urlretrieve(imageurl, id +".jpg")
-            print("✔️ Downloaded: " , id + ".jpg")
+            urllib.request.urlretrieve(image_url, image_id +".jpg")
+            print("✔️ Downloaded: ", image_id + ".jpg")
 
-    def generate_amount(self, promt, amount):
+        return generations
+
+    def generate_amount(self, prompt, amount):
         url = "https://labs.openai.com/api/labs/tasks"
         headers = {
             'Authorization': "Bearer " + self.bearer,
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
         }
         body = {
             "task_type": "text2im",
             "prompt": {
-                "caption": promt,
+                "caption": prompt,
                 "batch_size": self.batch_size,
             }
         }
-        
-        
+
         all_generations = []
-        for i in range(1,int(amount / self.batch_size +1)):
+        for i in range(1, int(amount / self.batch_size +1)):
             url = "https://labs.openai.com/api/labs/tasks"
             response = requests.post(url, headers=headers, data=json.dumps(body))
             if response.status_code != 200:
                 print(response.text)
                 return None
             data = response.json()
-            print("✔️ Task created with ID:", data["id"], "and PROMT:", promt, "OVERALL:" , str(i)  + "/" , int(amount / self.batch_size ))
-            print("⌛ Waiting for task to finish .. ")
+            print("✔️ Task created with ID:", data["id"], "and PROMPT:", prompt, "OVERALL:", str(i) + "/", int(amount / self.batch_size))
+            print("⌛ Waiting for task to finish...")
 
             while True:
                 url = "https://labs.openai.com/api/labs/tasks/" + data["id"]
                 response = requests.get(url, headers=headers)
                 data = response.json()
                 if data["status"] == "succeeded":
-                    
                     generations = data["generations"]["data"]
                     print("➕ Appended new generations to all_generations")
                     all_generations.append(generations)
                     break
-                else:
-                    # print("Task not completed yet")
-                    time.sleep(3)
-                    continue
+
+                time.sleep(3)
         print("🙌 Task completed!")
         print(all_generations)
         return all_generations

@@ -4,7 +4,7 @@
 
 - Go to https://labs.openai.com/
 - Open Network Tab in Developer Tools
-- Type a promt and press "Generate"
+- Type a prompt and press "Generate"
 - Look for fetch to https://labs.openai.com/api/labs/tasks
 - In the request header look for authorization then get the Bearer Token
 
@@ -23,8 +23,8 @@ print(generations)
 ```
 
 ```
-✔️  Task created with ID: task-f77yxcsdf3OEm and PROMT: portal to another dimension, digital art
-⌛ Waiting for task to finish .. 
+✔️  Task created with ID: task-f77yxcsdf3OEm and PROMPT: portal to another dimension, digital art
+⌛ Waiting for task to finish...
 🙌 Task completed!
 
 [
@@ -67,8 +67,8 @@ generations = dalle.generate_and_download("portal to another dimension, digital 
 ```
 
 ```
-✔️  Task created with ID: task-f77sayxcSGdfOEm and PROMT: portal to another dimension, digital art
-⌛ Waiting for task to finish .. 
+✔️  Task created with ID: task-f77sayxcSGdfOEm and PROMPT: portal to another dimension, digital art
+⌛ Waiting for task to finish...
 🙌 Task completed!
 Download to directory: C:\Users\pc\dalle2
 ✔️  Downloaded:  generation-fAq4Lyxcm7pQVDBQEWJ.jpg
@@ -90,10 +90,10 @@ print(generations)
 ```
 
 ```
-✔️  Task created with ID: task-lm0V4nZasgAFasd7AsStE67 and PROMT: portal to another dimension OVERALL: 1/ 2
-⌛ Waiting for task to finish .. 
+✔️  Task created with ID: task-lm0V4nZasgAFasd7AsStE67 and PROMPT: portal to another dimension OVERALL: 1/ 2
+⌛ Waiting for task to finish...
 ➕  Appended new generations to all_generations
-✔️  Task created with ID: task-WcetZOHt8asdvHb433gi and PROMT: portal to another dimension OVERALL: 2/ 2
+✔️  Task created with ID: task-WcetZOHt8asdvHb433gi and PROMPT: portal to another dimension OVERALL: 2/ 2
 ⌛ Waiting for task to finish .. 
 ➕  Appended new generations to all_generations
 🙌 Task completed!
