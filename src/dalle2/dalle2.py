@@ -1,27 +1,66 @@
+import base64
 import json
+import math
 import os
 import requests
 import time
 import urllib
 import urllib.request
 
+from pathlib import Path
+
 class Dalle2():
     def __init__(self, bearer):
         self.bearer = bearer
         self.batch_size = 4
+        self.inpainting_batch_size = 3
+        self.task_sleep_seconds = 3
 
     def generate(self, prompt):
-        url = "https://labs.openai.com/api/labs/tasks"
-        headers = {
-            'Authorization': "Bearer " + self.bearer,
-            'Content-Type': "application/json",
-        }
         body = {
             "task_type": "text2im",
             "prompt": {
                 "caption": prompt,
                 "batch_size": self.batch_size,
             }
+        }
+
+        return self.get_task_response(body)
+
+    def generate_and_download(self, prompt, image_dir=os.getcwd()):
+        generations = self.generate(prompt)
+        if not generations:
+            return None
+
+        return self.download(generations, image_dir)
+
+    def generate_amount(self, prompt, amount):
+        if amount < self.batch_size:
+            raise ValueError(f"passed amount of {amount} cannot be smaller than the batch size of {self.batch_size}")
+
+        return [self.generate(prompt) for _ in range(math.ceil(amount / self.batch_size))]
+
+    def generate_from_masked_image(self, prompt, image_path):
+        with open(image_path, "rb") as f:
+            image_base64 = base64.b64encode(f.read())
+
+        body = {
+            "task_type": "inpainting",
+            "prompt": {
+                "caption": prompt,
+                "batch_size": self.inpainting_batch_size,
+                "image": image_base64.decode(),
+                "masked_image": image_base64.decode(), # identical since already masked
+            }
+        }
+
+        return self.get_task_response(body)
+
+    def get_task_response(self, body):
+        url = "https://labs.openai.com/api/labs/tasks"
+        headers = {
+            'Authorization': "Bearer " + self.bearer,
+            'Content-Type': "application/json",
         }
 
         response = requests.post(url, headers=headers, data=json.dumps(body))
@@ -29,71 +68,37 @@ class Dalle2():
             print(response.text)
             return None
         data = response.json()
-        print("✔️  Task created with ID:", data["id"], "and PROMPT:", prompt)
+        print(f"✔️ Task created with ID: {data['id']}")
         print("⌛ Waiting for task to finish...")
 
         while True:
-            url = "https://labs.openai.com/api/labs/tasks/" + data["id"]
+            url = f"https://labs.openai.com/api/labs/tasks/{data['id']}"
             response = requests.get(url, headers=headers)
             data = response.json()
+
+            if not response.ok:
+                print(f"Request failed with status: {response.status_code}, data: {response.json()}")
+                return None
+            if data["status"] == "failed":
+                print(f"Task failed: {data['status_information']}")
+                return None
             if data["status"] == "succeeded":
                 print("🙌 Task completed!")
-                generations = data["generations"]["data"]
-                return generations
+                return data["generations"]["data"]
 
-            time.sleep(3)
+            print("...task not completed yet")
+            time.sleep(self.task_sleep_seconds)
 
-    def generate_and_download(self, prompt):
-        generations = self.generate(prompt)
+    def download(self, generations, image_dir=os.getcwd()):
         if not generations:
-            return None
+            raise ValueError("generations is empty!")
 
-        print("Download to directory: " + os.getcwd())
+        file_paths = []
         for generation in generations:
             image_url = generation["generation"]["image_path"]
-            image_id = generation["id"]
+            file_path = Path(image_dir, generation['id']).with_suffix('.png')
+            file_paths.append(str(file_path))
+            urllib.request.urlretrieve(image_url, file_path)
+            print(f"✔️ Downloaded: {file_path}")
 
-            urllib.request.urlretrieve(image_url, image_id +".jpg")
-            print("✔️ Downloaded: ", image_id + ".jpg")
-
-        return generations
-
-    def generate_amount(self, prompt, amount):
-        url = "https://labs.openai.com/api/labs/tasks"
-        headers = {
-            'Authorization': "Bearer " + self.bearer,
-            'Content-Type': "application/json",
-        }
-        body = {
-            "task_type": "text2im",
-            "prompt": {
-                "caption": prompt,
-                "batch_size": self.batch_size,
-            }
-        }
-
-        all_generations = []
-        for i in range(1, int(amount / self.batch_size +1)):
-            url = "https://labs.openai.com/api/labs/tasks"
-            response = requests.post(url, headers=headers, data=json.dumps(body))
-            if response.status_code != 200:
-                print(response.text)
-                return None
-            data = response.json()
-            print("✔️ Task created with ID:", data["id"], "and PROMPT:", prompt, "OVERALL:", str(i) + "/", int(amount / self.batch_size))
-            print("⌛ Waiting for task to finish...")
-
-            while True:
-                url = "https://labs.openai.com/api/labs/tasks/" + data["id"]
-                response = requests.get(url, headers=headers)
-                data = response.json()
-                if data["status"] == "succeeded":
-                    generations = data["generations"]["data"]
-                    print("➕ Appended new generations to all_generations")
-                    all_generations.append(generations)
-                    break
-
-                time.sleep(3)
-        print("🙌 Task completed!")
-        print(all_generations)
-        return all_generations
+        return file_paths
