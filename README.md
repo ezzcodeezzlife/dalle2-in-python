@@ -152,5 +152,6 @@ generations = dalle.generate_from_masked_image(
 🙌 Task completed!
 ```
 
-# Try it!
-[![Test In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1EEgZNAI58V_OiEfRJQSsQV_xkhHzQeRB?usp=sharing)
+# Other languages
+
+[Nodejs Package](https://github.com/ezzcodeezzlife/dalle-node)
