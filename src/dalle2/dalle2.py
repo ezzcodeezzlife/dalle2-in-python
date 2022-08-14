@@ -82,6 +82,9 @@ class Dalle2():
             if data["status"] == "failed":
                 print(f"Task failed: {data['status_information']}")
                 return None
+            if data["status"] == "rejected":
+                print(f"Task rejected: {data['status_information']}")
+                return None
             if data["status"] == "succeeded":
                 print("🙌 Task completed!")
                 return data["generations"]["data"]
