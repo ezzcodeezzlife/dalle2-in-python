@@ -51,25 +51,6 @@ print(generations)
 ]
 ```
 
-## Download images
-```python
-file_paths = dalle.download(generations)
-print(file_paths)
-```
-
-```
-✔️ Downloaded: C:\...\generation-XySidj4N8EN6Ok9ed15BZ2bs.png
-✔️ Downloaded: C:\...\generation-IK3UdxDz77FA5SLKpQPIITdU.png
-✔️ Downloaded: C:\...\generation-uNejKBXz1z6EQxJAT9pAZbof.png
-✔️ Downloaded: C:\...\generation-Ol1wEqNprf34vNohmJz0iUiE.png
-
-[
-  'C:/.../generation-pvi9TEWrhciLyFIlfgF1XUHF.png',
-  'C:/.../generation-xp545V8jsqhSKKyJydHZPL50.png',
-  'C:/.../generation-wNODqnBhvzYvXasonBn1anIA.png',
-  'C:/.../generation-InPSaWWxpapT8TJD0kI71hNM.png'
-]
-```
 
 ## Generate images and download them
 ```python
