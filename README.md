@@ -16,7 +16,7 @@ pip install dalle2
 
 ```python
 from dalle2 import Dalle2
-dalle = Dalle2("sess-xxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+dalle = Dalle2("sess-xxxxxxxxxxxxxxxxxxxxxxxxxxxx") # your bearer key
 ```
 
 ## Generate images
