@@ -74,6 +74,10 @@ file_paths = dalle.generate_and_download("portal to another dimension, digital a
 ## Generate a specific number of images
 ```python
 generations = dalle.generate_amount("portal to another dimension", 8) # Every generation has batch size 4 -> amount % 4 == 0 works best
+
+# download images
+file_paths = dalle.download(generations)
+print(file_paths)
 ```
 
 ```
