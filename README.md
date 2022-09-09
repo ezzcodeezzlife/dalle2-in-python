@@ -137,6 +137,20 @@ generations = dalle.generate_from_masked_image(
 🙌 Task completed!
 ```
 
+## Dry runs
+
+If you are playing around and don't want to waste credits, you can use the dry run option, eg
+
+```
+dalle.generate(..., dry=True)
+dalle.generate_amount(...., dry=True)
+dalle.generate_and_download(...., dry=True)
+```
+
+This will circumvent the call to openAI but will still generate some random data so if you use the
+output of `generate` to `download`, it will download random images.
+
+
 # Other languages
 
 [Nodejs Package](https://github.com/ezzcodeezzlife/dalle-node)
