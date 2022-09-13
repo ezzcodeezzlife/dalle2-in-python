@@ -65,10 +65,10 @@ file_paths = dalle.generate_and_download("portal to another dimension, digital a
 ...task not completed yet
 ...task not completed yet
 🙌 Task completed!
-✔️ Downloaded: C:\...\generation-XySidj4N8EN6Ok9ed15BZ2bs.png
-✔️ Downloaded: C:\...\generation-IK3UdxDz77FA5SLKpQPIITdU.png
-✔️ Downloaded: C:\...\generation-uNejKBXz1z6EQxJAT9pAZbof.png
-✔️ Downloaded: C:\...\generation-Ol1wEqNprf34vNohmJz0iUiE.png
+✔️ Downloaded: C:\...\generation-XySidj4N8EN6Ok9ed15BZ2bs.webp
+✔️ Downloaded: C:\...\generation-IK3UdxDz77FA5SLKpQPIITdU.webp
+✔️ Downloaded: C:\...\generation-uNejKBXz1z6EQxJAT9pAZbof.webp
+✔️ Downloaded: C:\...\generation-Ol1wEqNprf34vNohmJz0iUiE.webp
 ```
 
 ## Generate a specific number of images
@@ -122,7 +122,7 @@ image_rgba.save('image_with_transparent_right_half.png')
 # ask DALL·E to fill-in the transparent right half
 generations = dalle.generate_from_masked_image(
     "portal to another dimension, digital art",
-    "image_with_transparent_right_half.png",
+    "image_with_transparent_right_half.webp",
 )
 ```
 

@@ -99,7 +99,7 @@ class Dalle2():
         file_paths = []
         for generation in generations:
             image_url = generation["generation"]["image_path"]
-            file_path = Path(image_dir, generation['id']).with_suffix('.png')
+            file_path = Path(image_dir, generation['id']).with_suffix('.webp')
             file_paths.append(str(file_path))
             urllib.request.urlretrieve(image_url, file_path)
             print(f"✔️ Downloaded: {file_path}")
