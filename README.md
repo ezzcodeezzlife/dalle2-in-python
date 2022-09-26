@@ -117,12 +117,13 @@ draw.rectangle(area_to_keep, fill=255)
 
 image_rgba = image.copy()
 image_rgba.putalpha(image_alpha)
+image_rgba = image_rgba.resize((1024, 1024)) # image must be square and 1024x1024
 image_rgba.save('image_with_transparent_right_half.png')
 
 # ask DALL·E to fill-in the transparent right half
 generations = dalle.generate_from_masked_image(
     "portal to another dimension, digital art",
-    "image_with_transparent_right_half.webp",
+    "image_with_transparent_right_half.png",
 )
 ```
 
