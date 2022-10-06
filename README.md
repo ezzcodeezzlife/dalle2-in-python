@@ -1,5 +1,4 @@
-# Get Access
-[labs.openai.com/waitlist](https://labs.openai.com/waitlist)
+
 
 # Installation
 ```bash
@@ -8,11 +7,13 @@ pip install dalle2
 
 # Usage
 ## Setup
-1. Go to https://labs.openai.com/
-1. Open Network Tab in Developer Tools
-1. Type a prompt and press "Generate"
-1. Look for fetch to https://labs.openai.com/api/labs/tasks
-1. In the request header look for authorization then get the Bearer Token
+1. Go to https://openai.com/dall-e-2/
+2. Create a OpenAI Account
+3. Go to https://labs.openai.com/
+4. Open the Network Tab in Developer Tools
+5. Type a prompt and press "Generate"
+6. Look for fetch to https://labs.openai.com/api/labs/tasks
+7. In the request header look for authorization then get the Bearer Token
 
 ```python
 from dalle2 import Dalle2
