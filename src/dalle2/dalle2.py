@@ -63,19 +63,35 @@ class Dalle2():
             'Content-Type': "application/json",
         }
 
-        response = requests.post(url, headers=headers, data=json.dumps(body))
-        if response.status_code != 200:
-            print(response.text)
-            return None
+        request_count = 0
+        for request in range(3):
+            response = requests.post(url, headers=headers, data=json.dumps(body))
+            if response.status_code != 200:
+                request_count += 1
+                if request_count == 3:
+                    return None
+                else:
+                    time.sleep(10)
+            elif response.status_code == 200:
+                break
         data = response.json()
         print(f"✔️ Task created with ID: {data['id']}")
         print("⌛ Waiting for task to finish...")
 
         while True:
             url = f"https://labs.openai.com/api/labs/tasks/{data['id']}"
-            response = requests.get(url, headers=headers)
-            data = response.json()
-
+            get_response_count = 0
+            for get_response in range(3):
+                try:
+                    response = requests.get(url, headers=headers)
+                    data = response.json()
+                    break
+                except:
+                    get_response_count += 1
+                    if get_response_count == 3:
+                        return None
+                    time.sleep(10)
+                    
             if not response.ok:
                 print(f"Request failed with status: {response.status_code}, data: {response.json()}")
                 return None
