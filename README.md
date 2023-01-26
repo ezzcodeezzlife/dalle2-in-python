@@ -1,4 +1,4 @@
-
+[OpenAI has a official API now](https://openai.com/blog/dall-e-api-now-available-in-public-beta/)
 
 # Installation
 ```bash
