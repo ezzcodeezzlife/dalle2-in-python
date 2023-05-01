@@ -8,7 +8,8 @@ pip install dalle2
 # Usage
 ## Setup
 1. Go to https://openai.com/dall-e-2/
-2. Create a OpenAI Account
+2. Create an 
+OpenAI Account
 3. Go to https://labs.openai.com/
 4. Open the Network Tab in Developer Tools
 5. Type a prompt and press "Generate"
